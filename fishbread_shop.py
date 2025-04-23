@@ -10,6 +10,12 @@ sales = {
     "초코붕어": 0
     }
 
+prices = {
+    "팥붕어빵": 1000,
+    "슈크림붕어 빵": 1200,
+    "초코붕어": 1500
+    }
+
 def order_bread():
     while True:
         bread_type = input("주문할 빵 종류를 입력하세요(팥붕어빵, 슈크림붕어빵, 초코붕어빵, 종료): ")
@@ -29,23 +35,30 @@ def order_bread():
 
 def admin_mode():
     while True:
-        bread_type = input("관리자 모드 선택 (1: 재고 확인, 2: 판매 확인, 3: 종료): ")
+        bread_type = input("(팥붕어빵, 슈크림붕어빵, 초코붕어빵, 종료): ")
         if bread_type == "종료":
             print("관리자 모드를 종료합니다.")
             break
-        if bread_type in stock:
+        elif bread_type in stock:
             bread_count = int(input("창고에 채워 넣을 빵 개수를 입력하세요: "))
             stock[bread_type] += bread_count
             print(f"{bread_type}의 재고가 {bread_count}개 추가되었습니다. 현재 재고: {stock[bread_type]}개")
         else:
             print("다시 입력하세요.")
 
+def calculate_sales():
+    total = 0
+    for key in sales:
+        total += (sales[key] * prices[key])
+    print(f"총 판매 금액: {total}원")
+
 while True:
     mode = input("Select mode (1: 주문, 2: 관리자, 3: 종료): ")
     if mode == "종료":
+        calculate_sales()
         print("프로그램을 종료합니다.")
         break
     elif mode == "주문":
         order_bread()
     elif mode == "관리자":
-        admin_mode = input("관리자 모드 선택 (1: 재고 확인, 2: 판매 확인): ")
+        admin_mode()
